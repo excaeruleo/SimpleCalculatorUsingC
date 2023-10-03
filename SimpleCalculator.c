@@ -9,9 +9,10 @@ int main(int argc, char *argv[]) {
     char operator;
     float answer = 0;
     char keepGoing;
+    printf("Enter calculation:\n");
+    scanf("%f %c %f", &first, &operator, &second);
+    while ( (getchar()) != '\n' );
     while (! (keepGoing == 'N')) {
-        printf("Enter calculation:\n\n");
-        scanf("%f %c %f", &first, &operator, &second);
         switch(operator) {
             case '+': answer = first + second;
                 break;
@@ -27,12 +28,21 @@ int main(int argc, char *argv[]) {
                 answer = sqrt(first);
                 break;
             default: goto fail;
+        }
+        printf("%.9g%c%.9g = %.6g\n", first, operator, second, answer);
+        printf("Continue? \n");
+        scanf("%c", &keepGoing);
+        while ( (getchar()) != '\n' );
+        if (keepGoing == 'N') {
+            goto fail;
+        }
+        else if (keepGoing == 'Y') {
+            printf("Enter calculation:\n");
+            scanf("%f %c %f", &first, &operator, &second);
+            while ( (getchar()) != '\n' );
+        }
     }
-    printf("%.9g%c%.9g = %.6g\n\n", first, operator, second, answer);
-    }
-    goto exit;
     fail:
         printf("Fail.\n");
-    exit:
-        return 0;
+    return 1;
 }
